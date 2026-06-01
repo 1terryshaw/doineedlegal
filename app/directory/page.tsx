@@ -61,7 +61,7 @@ export default async function DirectoryPage({
       </div>
 
       <p className="text-gray-600 mb-4">
-        {totalCount.toLocaleString()} {totalCount === 1 ? verticalConfig.listingNoun : verticalConfig.listingNounPlural}
+        {totalCount.toLocaleString("en-US")} {totalCount === 1 ? verticalConfig.listingNoun : verticalConfig.listingNounPlural}
         {hasFilters ? " matching your filters" : " in our directory"}.
       </p>
 

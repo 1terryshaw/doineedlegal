@@ -51,7 +51,7 @@ export default async function RegionPage({ params }: Props) {
         <ShareButtons variant="compact" title={`${verticalConfig.name} — Directory`} />
       </div>
       <p className="text-gray-600 mb-8">
-        Browse {totalCount.toLocaleString()} {totalCount === 1 ? verticalConfig.listingNoun : verticalConfig.listingNounPlural} in {regionData.name}, {regionData.province}.
+        Browse {totalCount.toLocaleString("en-US")} {totalCount === 1 ? verticalConfig.listingNoun : verticalConfig.listingNounPlural} in {regionData.name}, {regionData.province}.
       </p>
 
       {listings.length === 0 ? (
