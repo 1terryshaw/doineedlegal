@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import verticalConfig from "@/lib/vertical.config";
 import { getListings, getFilteredListingsCount } from "@/lib/supabase";
-import { getRegionBySlug, REGIONS } from "@/lib/constants";
+import { getRegionBySlug, REGIONS, formatCount } from "@/lib/constants";
 import ListingCard from "@/components/ListingCard";
 import ShareButtons from "@/components/pizzazz/ShareButtons";
 import { regionBreadcrumbSchema, regionCollectionPageSchema } from "@/lib/seo";
@@ -51,7 +51,7 @@ export default async function RegionPage({ params }: Props) {
         <ShareButtons variant="compact" title={`${verticalConfig.name} — Directory`} />
       </div>
       <p className="text-gray-600 mb-8">
-        Browse {totalCount.toLocaleString("en-US")} {totalCount === 1 ? verticalConfig.listingNoun : verticalConfig.listingNounPlural} in {regionData.name}, {regionData.province}.
+        Browse {formatCount(totalCount)} {totalCount === 1 ? verticalConfig.listingNoun : verticalConfig.listingNounPlural} in {regionData.name}, {regionData.province}.
       </p>
 
       {listings.length === 0 ? (

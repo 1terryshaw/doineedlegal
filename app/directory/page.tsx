@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import Link from "next/link";
 import verticalConfig from "@/lib/vertical.config";
 import { getFilteredListings , getFilteredListingsCount, getDirectoryRegions, type DirectoryRegion } from "@/lib/supabase";
-import { LISTING_TYPES, REGIONS } from "@/lib/constants";
+import { LISTING_TYPES, REGIONS, formatCount } from "@/lib/constants";
 import ListingCard from "@/components/ListingCard";
 import SearchBar from "@/components/SearchBar";
 import LegalDisclaimer from "@/components/LegalDisclaimer";
@@ -61,7 +61,7 @@ export default async function DirectoryPage({
       </div>
 
       <p className="text-gray-600 mb-4">
-        {totalCount.toLocaleString("en-US")} {totalCount === 1 ? verticalConfig.listingNoun : verticalConfig.listingNounPlural}
+        {formatCount(totalCount)} {totalCount === 1 ? verticalConfig.listingNoun : verticalConfig.listingNounPlural}
         {hasFilters ? " matching your filters" : " in our directory"}.
       </p>
 
