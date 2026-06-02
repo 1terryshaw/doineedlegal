@@ -5,7 +5,7 @@ const verticalConfig = {
   displayDomain: "doineedlegal.com",
   tagline: "Find the right lawyer for your case.",
   description:
-    "Comprehensive US legal directory. Find lawyers by practice area and state.",
+    "Comprehensive legal directory. Find lawyers by practice area and state.",
 
   entityName: "Lawyer",
   entityNamePlural: "Lawyers",

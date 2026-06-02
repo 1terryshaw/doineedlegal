@@ -60,7 +60,7 @@ export default async function HomePage() {
             Find the right lawyer for your case.
           </h1>
           <p className="text-lg opacity-90 animate-fade-up" style={{ animationDelay: "0.1s" }}>
-            Search verified attorneys across the United States by practice area and state.
+            Search verified attorneys by practice area and state.
             Information only &mdash; this is not legal advice.
           </p>
         </div>

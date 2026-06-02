@@ -4,7 +4,7 @@ import verticalConfig from "@/lib/vertical.config";
 
 export const metadata: Metadata = {
   title: "About",
-  description: `About ${verticalConfig.name} — a comprehensive U.S. legal directory.`,
+  description: `About ${verticalConfig.name} — a comprehensive legal directory.`,
 };
 
 export default function AboutPage() {
@@ -13,7 +13,7 @@ export default function AboutPage() {
       <header>
         <h1 className="text-3xl font-bold mb-3">About {verticalConfig.name}</h1>
         <p className="text-lg text-gray-700">
-          A comprehensive U.S. legal directory. Find lawyers by practice area and state.
+          A comprehensive legal directory. Find lawyers by practice area and state.
         </p>
       </header>
 
@@ -21,7 +21,7 @@ export default function AboutPage() {
         <h2 className="text-xl font-semibold text-gray-900">What we do</h2>
         <p>
           We aggregate public records, bar-association directories, and nonprofit roster data
-          into a single searchable directory across the United States. Coverage spans
+          into a single searchable directory. Coverage spans
           immigration, family, criminal defense, personal injury, estate, real estate,
           business, bankruptcy, employment, and civil practice areas.
         </p>
