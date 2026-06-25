@@ -4,6 +4,7 @@ import verticalConfig from "@/lib/vertical.config";
 import { getFilteredListings , getFilteredListingsCount, getDirectoryRegions, type DirectoryRegion } from "@/lib/supabase";
 import { LISTING_TYPES, REGIONS, formatCount } from "@/lib/constants";
 import ListingCard from "@/components/ListingCard";
+import AddBusinessBanner from "@/components/AddBusinessBanner";
 import SearchBar from "@/components/SearchBar";
 import LegalDisclaimer from "@/components/LegalDisclaimer";
 import ShareButtons from "@/components/pizzazz/ShareButtons";
@@ -51,6 +52,7 @@ export default async function DirectoryPage({
       <div className="mb-6">
         <LegalDisclaimer />
       </div>
+      <AddBusinessBanner />
       <h1 className="text-3xl font-bold mb-2">All {verticalConfig.listingNounPlural}</h1>
       <div className="mb-4">
         <ShareButtons variant="compact" title={`Browse ${verticalConfig.name} Directory`} />
