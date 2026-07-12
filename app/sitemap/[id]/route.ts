@@ -83,11 +83,11 @@ export async function GET(
     // State lowercased to match the lowercase state-page URLs (/ca) and the
     // city route's canonical form.
     const cityPages = await getCityPageSlugs();
-    for (const { province_state, region_slug } of cityPages) {
+    for (const { province_state, region_slug, lastmod } of cityPages) {
       parts.push(
         urlEntry(
           `${baseUrl}/${province_state.toLowerCase()}/${region_slug}`,
-          now,
+          lastmod ?? now,
           "weekly",
           "0.7"
         )
