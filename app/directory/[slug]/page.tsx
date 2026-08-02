@@ -3,8 +3,11 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getListing } from "@/lib/supabase";
 import verticalConfig from "@/lib/vertical.config";
+import { getRegionBySlug } from "@/lib/constants";
+import { detailBreadcrumbSchema, localizeFaqs, OG_DEFAULT_IMAGE } from "@/lib/seo";
 import InquiryForm from "@/components/InquiryForm";
 import LegalDisclaimer from "@/components/LegalDisclaimer";
+import FaqSection from "@/components/FaqSection";
 import UpgradeModal from "@/components/UpgradeModal";
 import { can } from "@/lib/tier-capabilities";
 import ShareButtons from "@/components/pizzazz/ShareButtons";
@@ -21,6 +24,9 @@ import ListingGallery from "@/components/ListingGallery";
 import TierBadge from "@/components/TierBadge";
 import ReviewShowcase from "@/components/ReviewShowcase";
 
+const LEGAL_DISCLAIMER =
+  "The information here is for informational purposes only and is not legal advice. Consult a licensed attorney in your jurisdiction about your specific situation.";
+
 interface Props {
   params: Promise<{ slug: string }>;
 }
@@ -33,6 +39,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: listing.name,
     description: listing.short_description || listing.description,
     alternates: { canonical: `/directory/${slug}` },
+    openGraph: { images: [OG_DEFAULT_IMAGE] },
   };
 }
 
@@ -73,7 +80,7 @@ export default async function ListingPage({ params }: Props) {
 
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "LocalBusiness",
+    "@type": "LegalService",
     name: listing.name,
     description: listing.short_description || listing.description,
     telephone: listing.phone,
@@ -112,11 +119,27 @@ export default async function ListingPage({ params }: Props) {
     ...(sameAsLinks.length > 0 && { sameAs: sameAsLinks }),
 };
 
+  // Breadcrumb: Home → state hub (only if the province_state resolves to a REGIONS
+  // slug that 200s) → this listing. The region level is dropped when it doesn't resolve.
+  const regionHub = listing.province_state
+    ? getRegionBySlug(String(listing.province_state).toLowerCase())
+    : null;
+  const breadcrumbTrail = [
+    { name: "Home", path: "/" },
+    ...(regionHub ? [{ name: regionHub.name, path: `/${regionHub.slug}` }] : []),
+    { name: listing.name, path: `/directory/${listing.slug}` },
+  ];
+  const breadcrumbSchema = detailBreadcrumbSchema(breadcrumbTrail);
+
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
       <div className="max-w-4xl mx-auto px-4 py-12">
         <div className="mb-6">
@@ -326,6 +349,7 @@ export default async function ListingPage({ params }: Props) {
           </div>
         </div>
       </div>
+      <FaqSection faqs={localizeFaqs(verticalConfig.faqs, listing.city)} disclaimer={LEGAL_DISCLAIMER} />
       <UpgradeModal
         listingSlug={listing.slug}
         priceIds={{
