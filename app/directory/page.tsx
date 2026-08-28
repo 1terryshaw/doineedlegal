@@ -7,7 +7,6 @@ import ListingCard from "@/components/ListingCard";
 import AddBusinessBanner from "@/components/AddBusinessBanner";
 import SearchBar from "@/components/SearchBar";
 import LegalDisclaimer from "@/components/LegalDisclaimer";
-import ShareButtons from "@/components/pizzazz/ShareButtons";
 
 export const metadata: Metadata = {
   title: `Browse Directory`,
@@ -54,9 +53,6 @@ export default async function DirectoryPage({
       </div>
       <AddBusinessBanner />
       <h1 className="text-3xl font-bold mb-2">All {verticalConfig.listingNounPlural}</h1>
-      <div className="mb-4">
-        <ShareButtons variant="compact" title={`Browse ${verticalConfig.name} Directory`} />
-      </div>
 
       <div className="mb-6">
         <SearchBar variant="directory" defaultQ={q} defaultType={listing_type} defaultRegion={region} defaultCity={cityFilter} regions={runtimeRegions.length > 0 ? runtimeRegions : undefined} />
