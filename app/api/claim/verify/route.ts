@@ -7,9 +7,13 @@ export async function GET(request: NextRequest) {
   const token = searchParams.get("token");
   const slug = searchParams.get("slug");
   const siteUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+  // Every dead end here is a real owner holding a link that stopped working. Carry the slug
+  // so /claim/error can hand them a fresh one rather than only a "back to directory" link.
+  const claimError = (s?: string | null) =>
+    `${siteUrl}/claim/error${s ? `?slug=${encodeURIComponent(s)}` : ""}`;
 
   if (!token || !slug) {
-    return NextResponse.redirect(`${siteUrl}/claim/error`);
+    return NextResponse.redirect(claimError(slug));
   }
 
   const { data: listing, error } = await supabaseAdmin
@@ -19,15 +23,15 @@ export async function GET(request: NextRequest) {
     .single();
 
   if (error || !listing || listing.owner_auth_token !== token) {
-    return NextResponse.redirect(`${siteUrl}/claim/error`);
+    return NextResponse.redirect(claimError(slug));
   }
 
   // Mark as claimed (+ self-serve publish flip) — TDL #655
   if (listing.owner_auth_token_expires_at && new Date(listing.owner_auth_token_expires_at).getTime() < Date.now()) {
-    return NextResponse.redirect(`${siteUrl}/claim/error`);
+    return NextResponse.redirect(claimError(slug));
   }
   if (listing.owner_auth_token_expires_at && new Date(listing.owner_auth_token_expires_at).getTime() < Date.now()) {
-    return NextResponse.redirect(`${siteUrl}/claim/error`);
+    return NextResponse.redirect(claimError(slug));
   }
   const update: Record<string, unknown> = { claimed_at: new Date().toISOString(), claimed: true, updated_at: new Date().toISOString() };
   if (listing.submitted_via === "self_serve" && listing.submission_status === "pending_verification") {
