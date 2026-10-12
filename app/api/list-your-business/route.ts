@@ -6,6 +6,7 @@ import { sendClaimEmail, sendAddBusinessEmail } from "@/lib/email";
 import { normalizeGbpUrl } from "@/lib/gbp-url";
 import { normalizeWebsiteUrl } from "@/lib/url-normalize";
 import { nameHasPersonalEmail, NAME_EMAIL_MESSAGE } from "@/lib/name-email-guard";
+import { HAS_LIST_YOUR_BUSINESS } from "@/lib/add-business";
 
 export const dynamic = "force-dynamic";
 
@@ -43,6 +44,7 @@ async function uniqueSlug(base: string): Promise<string> {
 }
 
 export async function POST(req: NextRequest) {
+  if (!HAS_LIST_YOUR_BUSINESS) return NextResponse.json({ error: "Not found" }, { status: 404 });
   let body: Record<string, string>;
   try { body = await req.json(); } catch { return NextResponse.json({ error: "Invalid request." }, { status: 400 }); }
 

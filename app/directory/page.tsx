@@ -7,6 +7,7 @@ import ListingCard from "@/components/ListingCard";
 import AddBusinessBanner from "@/components/AddBusinessBanner";
 import SearchBar from "@/components/SearchBar";
 import LegalDisclaimer from "@/components/LegalDisclaimer";
+import { HAS_LIST_YOUR_BUSINESS } from "@/lib/add-business";
 
 export const metadata: Metadata = {
   title: `Browse Directory`,
@@ -51,7 +52,7 @@ export default async function DirectoryPage({
       <div className="mb-6">
         <LegalDisclaimer />
       </div>
-      <AddBusinessBanner />
+      {HAS_LIST_YOUR_BUSINESS && <AddBusinessBanner />}
       <h1 className="text-3xl font-bold mb-2">All {verticalConfig.listingNounPlural}</h1>
 
       <div className="mb-6">
